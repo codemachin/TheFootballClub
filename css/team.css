@@ -13,7 +13,6 @@
 
 .con {
     padding: 2px 16px;
-    cursor: pointer;
 
 }
 
@@ -31,7 +30,7 @@
 }
 
 .chip:hover {
-	box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+	box-shadow: 0 8px 20px 0 rgba(0,0,0,0.2);
 }
 
 .chip img {
@@ -42,7 +41,7 @@
     border-radius: 50%;
 }
 
-
+  /*for line spacing the teams in team page, inline-block for applying margin to anchor tags*/
    .ccd a{
     display: inline-block;
 	margin-bottom: 3%;
@@ -52,6 +51,7 @@
     }
 
 @media screen and (max-width: 768px){
+  /*this media query is for fixing over flowing container items on small screen sizes*/
 	#crd{
 		min-height: 700px !important;
 	}
@@ -66,6 +66,7 @@
     margin-bottom: 0px;
 
 }
+/*for animation in image overlay*/
 .overlay,.overlay2 {
   position: absolute;
   bottom: 100%;
@@ -99,6 +100,7 @@
 .cd:hover {
     box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
 }
+
 .text,.text2 {
   white-space: nowrap; 
   color: white;

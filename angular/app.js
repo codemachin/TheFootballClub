@@ -3,7 +3,7 @@
 var myApp = angular.module('teamApp', ['ngRoute']); 
 
 
-// this is without $scope
+// for getting all match details
 myApp.controller('mainController',['$http','$routeParams',function($http,$routeParams) {
 
   //create a context
@@ -15,7 +15,7 @@ myApp.controller('mainController',['$http','$routeParams',function($http,$routeP
   // i knew the result is going to be array, so i declared an empty array to initialize
   this.rounds = [];
   
-  console.log(this.rounds);
+  //if-else to use correct json data using $routeParams for year 15/16 and year 16/17
   if($routeParams.id==15){
   this.baseUrl = 'https://raw.githubusercontent.com/openfootball/football.json/master/2015-16/en.1.json';
   this.mn = 15;
@@ -23,7 +23,7 @@ myApp.controller('mainController',['$http','$routeParams',function($http,$routeP
     this.baseUrl = 'https://raw.githubusercontent.com/openfootball/football.json/master/2016-17/en.1.json';
     this.mn = 16;
   }
-
+  //gets all the list of matches for current session
   this.loadAllMatches = function(){
    
       $http({
@@ -51,7 +51,7 @@ myApp.controller('mainController',['$http','$routeParams',function($http,$routeP
         });
 
 
-  }// end load all blogs
+  }// end load all matches
    
 
 
@@ -60,7 +60,7 @@ myApp.controller('mainController',['$http','$routeParams',function($http,$routeP
 
 
 
-
+//controller for getting single match details
 
 myApp.controller('matchController',['$http','$routeParams',function($http,$routeParams) {
 
@@ -68,12 +68,11 @@ myApp.controller('matchController',['$http','$routeParams',function($http,$route
   var main = this;
   this.name = '';
   this.name2 = '';
-  console.log($routeParams.mn);
-  
+  //gets date and team info from routeParams to filter out a specific match
   this.match = $routeParams.date;
   this.tem = $routeParams.team;
-  console.log(this.match);
-  console.log(this.tem);
+  
+  //checks if match details for 2015 or 2016
   if($routeParams.eplid==15){
   this.baseUrl = 'https://raw.githubusercontent.com/openfootball/football.json/master/2015-16/en.1.json';
   } else if($routeParams.eplid==16){
@@ -89,8 +88,7 @@ myApp.controller('matchController',['$http','$routeParams',function($http,$route
           // when the response is available
           //console.log(response);
           main.rounds = response.data.rounds;
-          console.log(main.rounds);
-
+          //Twice nested for each loops for getting values for a specific match.
           angular.forEach(main.rounds, function(value, key1) {
               
             angular.forEach(value.matches, function(value, key) {
@@ -102,11 +100,11 @@ myApp.controller('matchController',['$http','$routeParams',function($http,$route
               main.date = value.date;
               main.score1 = value.score1;
               main.score2 = value.score2;
-              console.log(value.score2 , main.matchDay);
+              //console.log(value.score2 , main.matchDay);
             }
           });
 
-          });
+          }); //end of loops
 
         }, function errorCallback(response) {
           // called asynchronously if an error occurs
@@ -116,7 +114,7 @@ myApp.controller('matchController',['$http','$routeParams',function($http,$route
         });
 
 
-  }// end load all blogs
+  }// end load single match
 
 
 
@@ -127,7 +125,7 @@ myApp.controller('matchController',['$http','$routeParams',function($http,$route
 
 
 
-
+//for getting team details and catculating team statistics
 myApp.controller('teamStat',['$http','$routeParams',function($http,$routeParams) {
 
   //create a context
@@ -141,8 +139,8 @@ myApp.controller('teamStat',['$http','$routeParams',function($http,$routeParams)
   this.totalDraw=0;
 
 this.teamname=$routeParams.teamname;
-console.log(main.teamname);
-
+//console.log(main.teamname);
+// checks if match details needed for 2015 or 2016
 if($routeParams.tid==15){
 this.baseUrl = 'https://raw.githubusercontent.com/openfootball/football.json/master/2015-16/en.1.json';
 }else {
@@ -159,8 +157,8 @@ this.baseUrl = 'https://raw.githubusercontent.com/openfootball/football.json/mas
           // when the response is available
           //console.log(response);
           main.rounds = response.data.rounds;
-          console.log(main.rounds);
-
+          //console.log(main.rounds);
+          //double nested loops to calculate team stats
           angular.forEach(main.rounds, function(value, key1) {
               
             angular.forEach(value.matches, function(value, key) {
@@ -190,7 +188,7 @@ this.baseUrl = 'https://raw.githubusercontent.com/openfootball/football.json/mas
                         }}
           });
 
-          });
+          }); //end of loops
 
         }, function errorCallback(response) {
           // called asynchronously if an error occurs
@@ -200,105 +198,10 @@ this.baseUrl = 'https://raw.githubusercontent.com/openfootball/football.json/mas
         });
 
 
-  }// end load all blogs
+  }// end calculating team stats
   
    
 
 
 }]); // end controller
 
-
-
-
-myApp.controller('blogEditController',['$http',function($http) {
-
-  //create a context
-  var main = this;
-
-
-  this.pageHeading = 'Edit Blog Post';
-  this.pageSubHeading = 'please edit the field you want to change';
-
-  this.getParameterByName = function(name){
-
-      name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
-      var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
-      results = regex.exec(location.search);
-      return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
-
-
-  }// end get parameter by name
-
-  this.blogId = this.getParameterByName('blogId');
-  console.log(this.blogId);
-
-  this.baseUrl = 'https://projectsapi.edwisor.com/api/blogs';
-
-  this.loadBlog = function(){
-   
-      $http({
-        method: 'GET',
-        url: main.baseUrl+'/'+main.blogId
-      }).then(function successCallback(response) {
-          // this callback will be called asynchronously
-          // when the response is available
-          //console.log(response);
-          main.blog = response.data.data;
-          console.log(main.blog);
-
-          main.heading = main.blog.heading;
-          main.subHeading = main.blog.subHeading;
-          main.bodyHtml = main.blog.bodyHtml;
-          main.author = main.blog.author;
-          
-
-        }, function errorCallback(response) {
-          // called asynchronously if an error occurs
-          // or server returns response with an error status.
-          alert("some error occurred. Check the console.");
-          console.log(response);
-        });
-
-
-  }// end load all blogs
-
-
-  this.editPost = function(){
-
-      var myData ={
-
-          heading     : main.heading,
-          subHeading  : main.subHeading,
-          bodyHtml    : main.bodyHtml,
-          author      : main.author
-
-
-      }
-
-      console.log(myData);
-   
-      $http({
-        method: 'PUT',
-        data  : myData,
-        url: main.baseUrl+'/'+main.blogId+'/edit'
-      }).then(function successCallback(response) {
-          // this callback will be called asynchronously
-          // when the response is available
-          //console.log(response);
-          alert("blog edited successfully");
-          window.location = 'post.html?blogId='+response.data.data.blogId;
-          
-
-        }, function errorCallback(response) {
-          // called asynchronously if an error occurs
-          // or server returns response with an error status.
-          alert("some error occurred. Check the console.");
-          console.log(response);
-        });
-
-
-  }// end load all blogs
-   
-
-
-}]);
