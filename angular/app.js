@@ -37,10 +37,6 @@ myApp.controller('mainController',['$http','$routeParams',function($http,$routeP
           main.rounds = response.data.rounds;
 
           
-          
-          
-
-          console.log(main.matches);
 
         }, function errorCallback(response) {
           // called asynchronously if an error occurs

@@ -26,14 +26,12 @@ myApp.config(['$routeProvider', function($routeProvider){
         .when('/team1',{
 
         	templateUrl     : 'views/team1-view.html',
-        	controller 		: 'matchController',
-        	controllerAs 	: 'myMatch'
+        	
         })
         .when('/team2',{
 
         	templateUrl     : 'views/team2-view.html',
-        	controller 		: 'matchController',
-        	controllerAs 	: 'myMatch'
+        	
         })
         .when('/teamStats/:teamname/:tid',{
 
