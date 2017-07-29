@@ -9,9 +9,9 @@
 
 
 <div ng-repeat= "round in myTeam.rounds | filter:search ">
-  
+  <!--applies simultanous filter to each ng-repeat, multiple filters-->
   <div class="col-xs-12 col-md-6 col-lg-4 card" ng-if = "match.score1!==null" ng-repeat= 'match in round.matches | filter : team1s  | filter :team2s | filter : dateSel | filter : goal1 | filter : goal2'>
-
+  <!--nested ng-repeat for matches array in round array-->
     <div class="con">
       <a href="#/single/{{match.date}}/{{match.team1.name}}/{{myTeam.mn}}">
       <h4><b>{{match.date}}</b></h4> 
