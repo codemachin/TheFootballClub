@@ -1,0 +1,25 @@
+<div class="container" ng-init= "myTeam.loadAllMatches()">
+<h1><b>{{myTeam.name}}</b></h1>
+<input type="text" ng-model="team1s.team1.name" class="form-control" id="" placeholder="Filter by Teams one">
+<input type="text" ng-model="team2s.team2.name" class="form-control" id="" placeholder="Filter by team two">
+<input type="text" ng-model="dateSel.date" class="form-control" id="" placeholder="Choose Date of game play (yyyy-mm-dd)">
+<input type="text" ng-model="goal1.score1" class="form-control" id="" placeholder="Filter by opponent 1st's Goals scored">
+<input type="text" ng-model="goal2.score2" class="form-control" id="" placeholder="Filter by opponent 2nd's Goals scored">
+<br>
+
+
+<div ng-repeat= "round in myTeam.rounds | filter:search ">
+  
+  <div class="col-xs-12 col-md-6 col-lg-4 card" ng-if = "match.score1!==null" ng-repeat= 'match in round.matches | filter : team1s  | filter :team2s | filter : dateSel | filter : goal1 | filter : goal2'>
+
+    <div class="con">
+      <a href="#/single/{{match.date}}/{{match.team1.name}}/{{myTeam.mn}}">
+      <h4><b>{{match.date}}</b></h4> 
+      <p><b>{{match.team1.name}}</b> vs <b>{{match.team2.name}}</b></p> 
+      <p>Goals&nbsp;&nbsp;&nbsp;{{match.score1}}&nbsp;:&nbsp;{{match.score2}}</p></a>
+    </div>
+  </div>
+  </div>
+
+  
+</div>
