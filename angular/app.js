@@ -143,7 +143,7 @@ this.teamname=$routeParams.teamname;
 // checks if match details needed for 2015 or 2016
 if($routeParams.tid==15){
 this.baseUrl = 'https://raw.githubusercontent.com/openfootball/football.json/master/2015-16/en.1.json';
-}else {
+}else if($routeParams.tid==16){
   this.baseUrl = 'https://raw.githubusercontent.com/openfootball/football.json/master/2016-17/en.1.json';
 }
 
